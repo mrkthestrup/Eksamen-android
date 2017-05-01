@@ -14,14 +14,21 @@ public class GameScreen extends Screen
     }
     State state = State.Running;
     Bitmap background;
+    World world;
+    WorldRender worldrender;
 
     public GameScreen(GameEngine game)
     {
         super(game);
+        background = game.loadBitmap("Space-Background-1.jpg");
+        world = new World(game);
+        worldrender = new WorldRender(game, world);
     }
     @Override
     public void update(float deltaTime)
     {
+
+        game.drawBitmap(background, 0, 0);                                                          //setting the background to the screen
 
     }
 

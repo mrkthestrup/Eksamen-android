@@ -14,7 +14,7 @@ public class MainMenuScreen extends Screen
     public MainMenuScreen(GameEngine game)
     {
         super(game);
-        background = game.loadBitmap("Background-1.png");
+        background = game.loadBitmap("Space-Background-1.jpg");
         startgame = game.loadBitmap("xstartgame.png");
     }
 
@@ -25,6 +25,14 @@ public class MainMenuScreen extends Screen
         {
             game.setScreen(new GameScreen(game));
             return;
+        }
+
+        game.drawBitmap(background, 0,0);
+
+        passedTime += deltaTime;
+        if((passedTime - (int) passedTime) > 0.5f)
+        {
+            game.drawBitmap(startgame, 150 - startgame.getWidth()/2, 200 - startgame.getHeight() /2 );
         }
     }
 
