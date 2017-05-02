@@ -32,7 +32,7 @@ public class MainMenuScreen extends Screen
         passedTime += deltaTime;
         if((passedTime - (int) passedTime) > 0.5f)
         {
-            game.drawBitmap(startgame, 150 - startgame.getWidth()/2, 200 - startgame.getHeight() /2 );
+            game.drawBitmap(startgame, 160 - startgame.getWidth()/2, 240 );
         }
     }
 
