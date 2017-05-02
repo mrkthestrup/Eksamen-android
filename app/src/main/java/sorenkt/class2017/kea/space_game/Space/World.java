@@ -1,5 +1,8 @@
 package sorenkt.class2017.kea.space_game.Space;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import sorenkt.class2017.kea.space_game.GameEngine;
 
 
@@ -13,6 +16,7 @@ public class World
     GameEngine game;
     boolean gameOver = false;
     Player player = new Player();
+    List<Enemy> enemies = new ArrayList<>();
 
     public World(GameEngine game)
     {
@@ -21,10 +25,10 @@ public class World
 
     public void update(float deltaTime, float accelX)
     {
-        //looks for the Accelerometer and speed
+        //Kigger efter Accelerometer og fart
         player.x = player.x - accelX * deltaTime * 50;
 
-        //Check if player hit the wall
+        //Kontrollere om player rammer væggen
         if (player.x < MIN_X) player.x = MIN_X;
         if (player.x + Player.WIDTH > MAX_X) player.x = MAX_X - Player.WIDTH;
 

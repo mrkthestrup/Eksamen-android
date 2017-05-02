@@ -46,7 +46,7 @@ public class GameScreen extends Screen
             state = State.Running;
             resume();
         }
-        Log.d("Game", "blabla" + state);
+
         //if game over, go back to the mainMenu
         if (state ==State.GameOver)
         {
