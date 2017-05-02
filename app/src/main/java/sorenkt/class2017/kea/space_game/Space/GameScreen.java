@@ -20,7 +20,7 @@ public class GameScreen extends Screen
     public GameScreen(GameEngine game)
     {
         super(game);
-        background = game.loadBitmap("Space-Background-1.jpg");
+        background = game.loadBitmap("Background-4.png");
         world = new World(game);
         worldrender = new WorldRender(game, world);
     }
@@ -30,6 +30,12 @@ public class GameScreen extends Screen
 
         game.drawBitmap(background, 0, 0);                                                          //setting the background to the screen
 
+
+        if (state == State.Running)
+        {
+            world.update(deltaTime,game.getAccelerometer()[0]);
+        }
+        worldrender.render();
     }
 
     @Override
