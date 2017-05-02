@@ -11,6 +11,7 @@ public class World
     public static final float MAX_Y =479;
 
     GameEngine game;
+    boolean gameOver = false;
     Player player = new Player();
 
     public World(GameEngine game)
