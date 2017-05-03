@@ -4,7 +4,7 @@ public class Enemy
 {
     public static final float WIDTH = 50;
     public static final float HEIGHT = 60;      // Den højeste er 60 pixel
-    float x;
+    float x = 0;
     float y;
     int type;
 
