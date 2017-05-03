@@ -35,10 +35,10 @@ public class World
             generateenemies();
 
         }*/
-        laserGreen.x = laserGreen.x + laserGreen.vx * deltaTime;
-        laserGreen.x2 = laserGreen.x2 + laserGreen.vx * deltaTime;
-        laserGreen.y = laserGreen.y + laserGreen.vy * deltaTime;
 
+            laserGreen.x = laserGreen.x + laserGreen.vx * deltaTime;
+            laserGreen.x2 = laserGreen.x2 + laserGreen.vx * deltaTime;
+            laserGreen.y = laserGreen.y + laserGreen.vy * deltaTime;
 
 
         //Kigger efter Accelerometer og fart
