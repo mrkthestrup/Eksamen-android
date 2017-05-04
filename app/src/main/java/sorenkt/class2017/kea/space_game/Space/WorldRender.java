@@ -54,9 +54,13 @@ public class WorldRender
         game.drawBitmap(meteorSmall, 220,150);
       */
         game.drawBitmap(spaceShip, (int)world.player.x, (int)world.player.y);
-        //laser vises ud fra guns
-        game.drawBitmap(laserGreen,(int)world.laserGreen.x + 14,(int)world.laserGreen.y);
-        game.drawBitmap(laserGreen,(int)world.laserGreen.x2 - 20,(int)world.laserGreen.y);
+
+        for(Laser l: world.lasers)
+        {
+            //laser vises ud fra guns
+            game.drawBitmap(laserGreen, (int)l.x, (int)l.y);
+           // game.drawBitmap(laserGreen,(int)l.x2,(int)l.y);
+        }
 
     }
 

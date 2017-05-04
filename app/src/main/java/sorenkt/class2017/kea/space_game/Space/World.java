@@ -15,7 +15,9 @@ public class World
 
 
     Player player = new Player();
-    Laser laserGreen = new Laser();
+    //Laser laserGreen = new Laser();
+    List<Laser> lasers = new ArrayList<>();
+    float passedTime = 0;
 
     boolean gameOver = false;
 
@@ -30,15 +32,27 @@ public class World
 
     public void update(float deltaTime, float accelX)
     {
+        passedTime += deltaTime;
      /*   if (enemies.size() == 0)
         {
             generateenemies();
 
         }*/
 
-            laserGreen.x = laserGreen.x + laserGreen.vx * deltaTime;
-            laserGreen.x2 = laserGreen.x2 + laserGreen.vx * deltaTime;
-            laserGreen.y = laserGreen.y + laserGreen.vy * deltaTime;
+
+        if((passedTime - (int) passedTime) > 0.9f)                       //skal lige have noget hjælp her med at den kun skal skyde 1 gang og ikke 10!!!
+        {
+            lasers.add(new Laser(player.x +7, player.y));
+            lasers.add(new Laser(player.x +37, player.y));
+        }
+        for(Laser l: lasers)
+        {
+            l.y = l.y + l.vy * deltaTime;
+        }
+       // if (lasers.size() >= 100)            //sikker mig at array ikke tager for meget ram og hastighed
+       // {
+       //     lasers.clear();
+       // }
 
 
         //Kigger efter Accelerometer og fart
