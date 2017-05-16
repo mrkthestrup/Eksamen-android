@@ -7,13 +7,12 @@ public class Laser
     public static final float WIDTH = 5;
     public static final float HEIGHT = 18;
     float x = 160 - WIDTH /2;
-    float x2 = 160 + WIDTH /2;
     float y = World.MAX_Y - 50;
     float vx = 0;
     float vy= -100;
 
     //konstruktør
-    public Laser (float x, float y)
+    public Laser (float x, float y)     //tager x og y oppe fra
     {
         this.x = x;
         this.y = y;

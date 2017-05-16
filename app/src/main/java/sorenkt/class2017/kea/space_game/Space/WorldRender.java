@@ -39,27 +39,19 @@ public class WorldRender
     public void render()
     {
 
-      /*  loopSize = world.enemies.size();
+        loopSize = world.enemies.size();
         for (int i = 0; i<loopSize; i++)
         {
             enemy = world.enemies.get(i);
             game.drawBitmap(enemy1, (int)enemy.x, (int)enemy.y);
         }
-       */
 
-     /*   game.drawBitmap(enemy2, 110,240);
-        game.drawBitmap(enemy3, 160,240);
-        game.drawBitmap(enemy4, 210,240);
-        game.drawBitmap(meteorBig, 50,150);
-        game.drawBitmap(meteorSmall, 220,150);
-      */
         game.drawBitmap(spaceShip, (int)world.player.x, (int)world.player.y);
 
         for(Laser l: world.lasers)
         {
             //laser vises ud fra guns
             game.drawBitmap(laserGreen, (int)l.x, (int)l.y);
-           // game.drawBitmap(laserGreen,(int)l.x2,(int)l.y);
         }
 
     }

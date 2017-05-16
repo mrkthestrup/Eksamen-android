@@ -27,32 +27,24 @@ public class World
     public World(GameEngine game)
     {
         this.game = game;
-        //generateenemies();
+
     }
 
     public void update(float deltaTime, float accelX)
     {
+
         passedTime += deltaTime;
-     /*   if (enemies.size() == 0)
-        {
-            generateenemies();
 
-        }*/
-
-
-        if((passedTime - (int) passedTime) > 0.9f)                       //skal lige have noget hjælp her med at den kun skal skyde 1 gang og ikke 10!!!
+        if((passedTime - (int) passedTime) > 0.9f)
         {
             lasers.add(new Laser(player.x +7, player.y));
             lasers.add(new Laser(player.x +37, player.y));
+            passedTime = 0;
         }
         for(Laser l: lasers)
         {
             l.y = l.y + l.vy * deltaTime;
         }
-       // if (lasers.size() >= 100)            //sikker mig at array ikke tager for meget ram og hastighed
-       // {
-       //     lasers.clear();
-       // }
 
 
         //Kigger efter Accelerometer og fart
@@ -64,17 +56,6 @@ public class World
 
     }
 
-    private void generateenemies()
-    {
-        enemies.clear();                            //kontrollere at den altid er tom
 
-        for (int y = 10, type = 0; y < MAX_Y; y = y +(int)Enemy.HEIGHT + 2, type ++)
-        {
-            for (int x = 0; x < MAX_X - Enemy.WIDTH; x = x +(int)Enemy.WIDTH + 2)
-            {
-                enemies.add(new Enemy(x,y,type));
-            }
-        }
-    }
 
 }
