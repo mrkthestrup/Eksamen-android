@@ -12,16 +12,10 @@ public class WorldRender
     World world;
     Bitmap spaceShip;
     Bitmap laserGreen;
-    Bitmap enemy1;
-    Bitmap enemy2;
-    Bitmap enemy3;
     Bitmap enemy4;
     Bitmap meteorBig;
     Bitmap meteorSmall;
-    Bitmap laserRed;
-    int loopSize = 0;
-    Enemy enemy = null;
-
+    Bitmap missile;
 
     public WorldRender(GameEngine game, World world)
     {
@@ -29,12 +23,8 @@ public class WorldRender
         this.world = world;
         spaceShip = game.loadBitmap("playerWithGunAndEngine.png");
         laserGreen = game.loadBitmap("laserGreen.png");
-        laserRed = game.loadBitmap("laserRed.png");
-        enemy1 = game.loadBitmap("enemyShip1.png");
-        enemy2 = game.loadBitmap("enemyShip.png");
-        enemy3 = game.loadBitmap("enemyShip2.png");
-        enemy4 = game.loadBitmap("enemyShip3.png");
-        meteorBig = game.loadBitmap("meteorBigNy.png");
+        missile = game.loadBitmap("missile.png");
+        enemy4 = game.loadBitmap("enemyShip.png");
         meteorSmall = game.loadBitmap("meteorSmall.png");
     }
 
@@ -43,7 +33,7 @@ public class WorldRender
 
         for (Enemy e: world.enemies)
         {
-            game.drawBitmap(enemy3, (int)e.x, (int)e.y);
+            game.drawBitmap(enemy4, (int)e.x, (int)e.y);
         }
 
         game.drawBitmap(spaceShip, (int)world.player.x, (int)world.player.y);
@@ -55,10 +45,17 @@ public class WorldRender
             game.drawBitmap(laserGreen, (int)l.x, (int)l.y);
         }
 
-        for(Laser l: world.lasersE)
+        for(Missile m: world.missiles)
         {
-            //laser vises ud fra guns
-            game.drawBitmap(laserRed, (int)l.x, (int)l.y);
+            //Missiller
+            game.drawBitmap(missile, (int)m.x, (int)m.y);
+        }
+
+
+        for(Meteor meteor: world.meteors)
+        {
+            //Missiller
+            game.drawBitmap(meteorSmall, (int)meteor.x, (int)meteor.y);
         }
 
     }
