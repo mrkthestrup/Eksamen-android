@@ -2,6 +2,7 @@ package sorenkt.class2017.kea.space_game.Space;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import sorenkt.class2017.kea.space_game.GameEngine;
 
@@ -15,11 +16,13 @@ public class World
 
 
     Player player = new Player();
-    //Laser laserGreen = new Laser();
+    Enemy enemy = new Enemy();
     List<Laser> lasers = new ArrayList<>();
+    List<Laser> lasersE = new ArrayList<>();
     float passedTime = 0;
 
     boolean gameOver = false;
+
 
     List<Enemy> enemies = new ArrayList<>();
     GameEngine game;
@@ -32,18 +35,33 @@ public class World
 
     public void update(float deltaTime, float accelX)
     {
-
+        //player laser
         passedTime += deltaTime;
 
         if((passedTime - (int) passedTime) > 0.9f)
         {
             lasers.add(new Laser(player.x +7, player.y));
             lasers.add(new Laser(player.x +37, player.y));
+            enemies.add(new Enemy());
+            lasersE.add(new Laser(enemy.x, enemy.y));
+            lasersE.add(new Laser(enemy.x+20, enemy.y));
             passedTime = 0;
         }
         for(Laser l: lasers)
         {
             l.y = l.y + l.vy * deltaTime;
+        }
+
+
+        for (Laser le:  lasersE)
+        {
+            le.y = le.y - le.vy * deltaTime;
+        }
+
+
+        for (Enemy e: enemies)
+        {
+            e.y = e.y + e.vy * deltaTime;
         }
 
 
@@ -53,6 +71,11 @@ public class World
         //Kontrollere om player rammer væggen
         if (player.x < MIN_X) player.x = MIN_X;
         if (player.x + Player.WIDTH > MAX_X) player.x = MAX_X - Player.WIDTH;
+
+    }
+
+    public void generateEnemy()
+    {
 
     }
 

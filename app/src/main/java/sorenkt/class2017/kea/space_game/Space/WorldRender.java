@@ -18,6 +18,7 @@ public class WorldRender
     Bitmap enemy4;
     Bitmap meteorBig;
     Bitmap meteorSmall;
+    Bitmap laserRed;
     int loopSize = 0;
     Enemy enemy = null;
 
@@ -28,6 +29,7 @@ public class WorldRender
         this.world = world;
         spaceShip = game.loadBitmap("playerWithGunAndEngine.png");
         laserGreen = game.loadBitmap("laserGreen.png");
+        laserRed = game.loadBitmap("laserRed.png");
         enemy1 = game.loadBitmap("enemyShip1.png");
         enemy2 = game.loadBitmap("enemyShip.png");
         enemy3 = game.loadBitmap("enemyShip2.png");
@@ -39,19 +41,24 @@ public class WorldRender
     public void render()
     {
 
-        loopSize = world.enemies.size();
-        for (int i = 0; i<loopSize; i++)
+        for (Enemy e: world.enemies)
         {
-            enemy = world.enemies.get(i);
-            game.drawBitmap(enemy1, (int)enemy.x, (int)enemy.y);
+            game.drawBitmap(enemy3, (int)e.x, (int)e.y);
         }
 
         game.drawBitmap(spaceShip, (int)world.player.x, (int)world.player.y);
+
 
         for(Laser l: world.lasers)
         {
             //laser vises ud fra guns
             game.drawBitmap(laserGreen, (int)l.x, (int)l.y);
+        }
+
+        for(Laser l: world.lasersE)
+        {
+            //laser vises ud fra guns
+            game.drawBitmap(laserRed, (int)l.x, (int)l.y);
         }
 
     }
