@@ -45,18 +45,18 @@ public class World
 
     public void update(float deltaTime, float accelX)
     {
-        reload = game.loadBitmap("resume.png");
+
         passedTime += deltaTime;
 
         int randomnumber = ThreadLocalRandom.current().nextInt((int)World.MIN_X, (int)World.MAX_X - (int)Enemy.WIDTH); //sikre at vi bliver indenfor skærmstørrelsen og samtide med at det kommer random!
         //player laser
         if((passedTime - (int) passedTime) > 0.9f)
         {
-            float passedTime2 = passedTime;
             lasers.add(new Laser(player.x +7, player.y));
             lasers.add(new Laser(player.x +37, player.y));
-        }
             passedTime = 0;
+        }
+
 
         //enemy
         passedTime += deltaTime;
@@ -138,6 +138,7 @@ public class World
         collideEnemyPlayer();
         collideMeteorPlayer();
         collideMeteorLaser();
+        collideMissileLaser();
     }
 
     //kontrollere hvordan laser rammer en enemy
@@ -291,6 +292,7 @@ public class World
         }
     }
 
+    // meteoer rammer laser
     private void collideMeteorLaser()
     {
         Laser laser;
@@ -318,11 +320,63 @@ public class World
     private void meteorAbsorb(Meteor meteor, Laser laser)
     {
         if (collideRects(meteor.x, meteor.y, Meteor.WIDTH, Meteor.HEIGHT,
-                laser.x, laser.y + Laser.HEIGHT, Laser.WIDTH, 1))                                   //check the bottom edge of the block
+                laser.x, laser.y + Laser.HEIGHT, Laser.WIDTH, 1))                                   //check the bottom edge of the Meteor
         {
             return;
         }
     }
 
+    private void collideMissileLaser()
+    {
+        Random random = new Random();
+        int max = 5;
+        int min = 0;
+        int randomnumber2 = random.nextInt(max-min) +1;
+        Laser laser;
+        boolean hits = true;
+        for (int y = 0; y < lasers.size(); y++)
+        {
+            laser = lasers.get(y);
+            if (hits)
+            {
+                for (int i = 0; i < missiles.size(); i++)
+                {
+                    Missile missile = missiles.get(i);
+                    if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+                            missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT))
+                    {
+                        lasers.remove(y);
+                        missiles.remove(i);
+                        i = i-1;
+                        y = y-1;
+                        points = points + randomnumber2;
+                        laserToMissile(laser,missile);
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    private  void laserToMissile(Laser laser, Missile missile)
+    {
+        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+                missile.x, missile.y + Missile.HEIGHT, 1 ,1))                                             // check the bottom left cornet of the missile
+        {
+            return;
+        }
+        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+                missile.x + Missile.WIDTH, missile.y + Missile.HEIGHT, 1,1))                                // check the rigth bottom of the missile
+        {
+            return;
+        }
+
+        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+                missile.x, missile.y + Missile.HEIGHT, Missile.WIDTH, 1))                                   //check the bottom edge of the missile
+        {
+            return;
+        }
+    }
 
 }
