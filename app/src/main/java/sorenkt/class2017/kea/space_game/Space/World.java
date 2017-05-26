@@ -52,10 +52,11 @@ public class World
         //player laser
         if((passedTime - (int) passedTime) > 0.9f)
         {
+            float passedTime2 = passedTime;
             lasers.add(new Laser(player.x +7, player.y));
             lasers.add(new Laser(player.x +37, player.y));
-            passedTime = 0;
         }
+            passedTime = 0;
 
         //enemy
         passedTime += deltaTime;
