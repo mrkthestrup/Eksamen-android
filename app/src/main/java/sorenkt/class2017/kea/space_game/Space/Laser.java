@@ -17,4 +17,6 @@ public class Laser
         this.x = x;
         this.y = y;
     }
+
+
 }

@@ -2,6 +2,8 @@ package sorenkt.class2017.kea.space_game.Space;
 
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 
 import java.util.List;
@@ -25,6 +27,7 @@ public class GameScreen extends Screen
     World world;
     WorldRender worldrender;
     float passedTime= 0;
+    Typeface font;
 
 
     public GameScreen(GameEngine game)
@@ -83,6 +86,9 @@ public class GameScreen extends Screen
                 game.drawBitmap(flame,(int)world.player.x + Player.HEIGHT/ 2, (int)world.player.y + Player.WIDTH /2);
             }
         }
+        game.drawText(font,"Score: " + Integer.toString(world.points), 27, 11, Color.GREEN,12);
+        game.drawText(font,"Liv: " + Integer.toString(world.liv), 140, 11, Color.GREEN,12);
+
         worldrender.render();
 
         if (world.gameOver) state = State.GameOver;
