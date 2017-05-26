@@ -19,7 +19,7 @@ public class World
     public static final float MIN_Y =40;
     public static final float MAX_Y =479;
 
-    CollisionListener collisionListener;
+
     Player player = new Player();
     List<Laser> lasers = new ArrayList<>();
     List<Missile> missiles = new ArrayList<>();
@@ -29,11 +29,12 @@ public class World
     float passedTime = 0;
     int points = 0;
     Bitmap explotion;
-    Bitmap reload;
+    Bitmap explotion2;
     int liv = 100;
     Missile missile;
     Laser laser;
     boolean gameOver = false;
+
 
     GameEngine game;
 
@@ -130,6 +131,10 @@ public class World
         if (liv <= 0 )
         {
             gameOver = true;
+            enemies.clear();
+            lasers.clear();
+            missiles.clear();
+            meteors.clear();
         }
 
         //collide stuff!
@@ -328,6 +333,7 @@ public class World
 
     private void collideMissileLaser()
     {
+        explotion2 = game.loadBitmap("Explosion.png");
         Random random = new Random();
         int max = 5;
         int min = 0;
@@ -345,6 +351,7 @@ public class World
                     if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                             missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT))
                     {
+                        game.drawBitmap(explotion2, (int)missile.x, (int)missile.y);
                         lasers.remove(y);
                         missiles.remove(i);
                         i = i-1;

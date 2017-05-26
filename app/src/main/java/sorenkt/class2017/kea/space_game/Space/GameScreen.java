@@ -10,6 +10,7 @@ import java.util.List;
 
 import sorenkt.class2017.kea.space_game.GameEngine;
 import sorenkt.class2017.kea.space_game.Screen;
+import sorenkt.class2017.kea.space_game.Sound;
 import sorenkt.class2017.kea.space_game.TouchEvent;
 
 
@@ -39,6 +40,7 @@ public class GameScreen extends Screen
         flame = game.loadBitmap("jetFlame2.png");
         resume = game.loadBitmap("resume.png");
         gameOver = game.loadBitmap("gameover.png");
+
     }
     @Override
     public void update(float deltaTime)
@@ -111,6 +113,7 @@ public class GameScreen extends Screen
     public void pause()
     {
         if(state == State.Running ) state = State.Paused;
+
     }
 
     @Override

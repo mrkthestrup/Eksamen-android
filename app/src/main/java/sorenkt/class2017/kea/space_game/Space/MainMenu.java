@@ -22,5 +22,5 @@ public class MainMenu extends GameEngine
     public void onResume()
     {
         super.onResume();
-            }
+    }
 }
