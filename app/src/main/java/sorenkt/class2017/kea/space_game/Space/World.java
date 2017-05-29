@@ -27,6 +27,8 @@ public class World
     List<Enemy> enemies = new ArrayList<>();
 
     float passedTime = 0;
+    float passedTime1 = 0;
+    float passedTime2 = 0;
     int points = 0;
     Bitmap explotion;
     Bitmap explotion2;
@@ -34,6 +36,7 @@ public class World
     Missile missile;
     Laser laser;
     boolean gameOver = false;
+
 
 
     GameEngine game;
@@ -48,33 +51,31 @@ public class World
     {
 
         passedTime += deltaTime;
-
         int randomnumber = ThreadLocalRandom.current().nextInt((int)World.MIN_X, (int)World.MAX_X - (int)Enemy.WIDTH); //sikre at vi bliver indenfor skærmstørrelsen og samtide med at det kommer random!
         //player laser
-        if((passedTime - (int) passedTime) > 0.9f)
+        if((passedTime - (int) passedTime) > 0.8f)
         {
             lasers.add(new Laser(player.x +7, player.y));
             lasers.add(new Laser(player.x +37, player.y));
             passedTime = 0;
         }
 
-
         //enemy
-        passedTime += deltaTime;
-        if ((passedTime + (int) passedTime) > 0.92f)
+        passedTime1 += deltaTime;
+        if ((passedTime1 - (int) passedTime1) > 0.92f)
         {
             enemies.add(new Enemy(randomnumber, World.MIN_Y, 1));
             missiles.add(new Missile(randomnumber + 12, World.MIN_Y));
             missiles.add(new Missile(randomnumber + 28, World.MIN_Y));
-            passedTime = 0;
+            passedTime1 = 0;
         }
 
         //metoer
-        passedTime += deltaTime;
-        if ((passedTime + (int) passedTime) > 0.97)
+        passedTime2 += deltaTime;
+        if ((passedTime2 - (int) passedTime2) > 0.99f)
         {
             meteors.add(new Meteor(randomnumber,World.MIN_Y));
-            passedTime = 0;
+            passedTime2 = 0;
         }
 
         //player laser
@@ -138,8 +139,8 @@ public class World
         }
 
         //collide stuff!
-        collideLaserEnemy(deltaTime);
-        collideMissilePlayer(deltaTime);
+        collideLaserEnemy();
+        collideMissilePlayer();
         collideEnemyPlayer();
         collideMeteorPlayer();
         collideMeteorLaser();
@@ -158,17 +159,13 @@ public class World
     }
 
     //Laser collisition med enemy
-    private void collideLaserEnemy(float deltaTime)
+    private void collideLaserEnemy()
     {
-        boolean hits = true;
         explotion = game.loadBitmap("laserGreenShot.png");
-
         Laser laser;
         for (int y = 0; y < lasers.size(); y++)
         {
             laser = lasers.get(y);
-            if (hits)
-            {
                 for (int i = 0; i < enemies.size(); i++)
                 {
                     Enemy enemy = enemies.get(i);
@@ -183,7 +180,7 @@ public class World
                         laserHitEnemy(laser, enemy);
                     }
                 }
-            }
+
         }
     }
 
@@ -209,7 +206,7 @@ public class World
     }
 
     //Missil rammer player
-    private void collideMissilePlayer(float deltaTime)
+    private void collideMissilePlayer()
     {
         for (int i = 0; i < missiles.size(); i++)
         {
@@ -301,12 +298,10 @@ public class World
     private void collideMeteorLaser()
     {
         Laser laser;
-        boolean hits = true;
+
         for (int y = 0; y < lasers.size(); y++)
         {
             laser = lasers.get(y);
-            if (hits)
-            {
                 for (int i = 0; i < meteors.size(); i++)
                 {
                     Meteor meteor = meteors.get(i);
@@ -318,7 +313,7 @@ public class World
                         meteorAbsorb(meteor, laser);
                     }
                 }
-            }
+
         }
     }
 
@@ -339,12 +334,10 @@ public class World
         int min = 0;
         int randomnumber2 = random.nextInt(max-min) +1;
         Laser laser;
-        boolean hits = true;
+
         for (int y = 0; y < lasers.size(); y++)
         {
             laser = lasers.get(y);
-            if (hits)
-            {
                 for (int i = 0; i < missiles.size(); i++)
                 {
                     Missile missile = missiles.get(i);
@@ -360,7 +353,7 @@ public class World
                         laserToMissile(laser,missile);
                     }
                 }
-            }
+
         }
     }
 
