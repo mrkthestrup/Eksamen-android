@@ -53,8 +53,9 @@ public class World
         passedTime += deltaTime;
         int randomnumber = ThreadLocalRandom.current().nextInt((int)World.MIN_X, (int)World.MAX_X - (int)Enemy.WIDTH); //sikre at vi bliver indenfor skærmstørrelsen og samtide med at det kommer random!
         //player laser
-        if((passedTime - (int) passedTime) > 0.8f)
+        if(passedTime > 0.8f)
         {
+            System.out.println(passedTime + "*************");
             lasers.add(new Laser(player.x +7, player.y));
             lasers.add(new Laser(player.x +37, player.y));
             passedTime = 0;
@@ -62,7 +63,7 @@ public class World
 
         //enemy
         passedTime1 += deltaTime;
-        if ((passedTime1 - (int) passedTime1) > 0.92f)
+        if (passedTime1 > 0.92f)
         {
             enemies.add(new Enemy(randomnumber, World.MIN_Y, 1));
             missiles.add(new Missile(randomnumber + 12, World.MIN_Y));
@@ -72,7 +73,7 @@ public class World
 
         //metoer
         passedTime2 += deltaTime;
-        if ((passedTime2 - (int) passedTime2) > 0.99f)
+        if (passedTime2 > 0.99f)
         {
             meteors.add(new Meteor(randomnumber,World.MIN_Y));
             passedTime2 = 0;
@@ -172,12 +173,11 @@ public class World
                     if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                             enemy.x, enemy.y, Enemy.WIDTH, Enemy.HEIGHT))
                     {
+                        laserHitEnemy(laser, enemy);
                         points = points + 10 - enemy.type;
                         game.drawBitmap(explotion, (int)enemy.x, (int)enemy.y);                     //måske ikke den bedste sted, men det virker! Collistion får mit spil til at crashe
                         enemies.remove(i);
                         lasers.remove(y);
-                        i = i-1;
-                        laserHitEnemy(laser, enemy);
                     }
                 }
 
@@ -217,7 +217,6 @@ public class World
                 liv = liv - 20;
                 missilesHits(missile,player);
                 missiles.remove(i);
-                i = i-1;
             }
         }
     }
@@ -289,7 +288,6 @@ public class World
             {
                 liv = liv - randomnumber;
                 meteors.remove(i);
-                i = i-1;
             }
         }
     }
@@ -309,7 +307,6 @@ public class World
                             meteor.x, meteor.y, Meteor.WIDTH, Meteor.HEIGHT))
                     {
                         lasers.remove(y);
-                        y = y-1;
                         meteorAbsorb(meteor, laser);
                     }
                 }
@@ -347,8 +344,6 @@ public class World
                         game.drawBitmap(explotion2, (int)missile.x, (int)missile.y);
                         lasers.remove(y);
                         missiles.remove(i);
-                        i = i-1;
-                        y = y-1;
                         points = points + randomnumber2;
                         laserToMissile(laser,missile);
                     }
