@@ -55,7 +55,6 @@ public class World
         //player laser
         if(passedTime > 0.8f)
         {
-            System.out.println(passedTime + "*************");
             lasers.add(new Laser(player.x +7, player.y));
             lasers.add(new Laser(player.x +37, player.y));
             passedTime = 0;
