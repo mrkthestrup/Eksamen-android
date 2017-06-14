@@ -54,7 +54,7 @@ public class WorldRender
 
         for(Meteor meteor: world.meteors)
         {
-            //Missiller
+            //Meteor
             game.drawBitmap(meteorSmall, (int)meteor.x, (int)meteor.y);
         }
 

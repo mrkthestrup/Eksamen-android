@@ -38,7 +38,6 @@ public class World
     boolean gameOver = false;
 
 
-
     GameEngine game;
 
     public World(GameEngine game)
@@ -49,9 +48,11 @@ public class World
 
     public void update(float deltaTime, float accelX)
     {
-
         passedTime += deltaTime;
-        int randomnumber = ThreadLocalRandom.current().nextInt((int)World.MIN_X, (int)World.MAX_X - (int)Enemy.WIDTH); //sikre at vi bliver indenfor skærmstørrelsen og samtide med at det kommer random!
+
+        //sikre at vi bliver indenfor skærmstørrelsen og samtide med at enemy kommer random!
+        int randomnumber = ThreadLocalRandom.current().nextInt((int)World.MIN_X, (int)World.MAX_X - (int)Enemy.WIDTH);
+
         //player laser
         if(passedTime > 0.8f)
         {
@@ -84,7 +85,7 @@ public class World
             l.y = l.y + l.vy * deltaTime;
         }
 
-        //enemy lasers
+        //enemy Missiler
         for (Missile m: missiles)
         {
             m.y = m.y - (10+m.vy) * deltaTime;
@@ -174,7 +175,7 @@ public class World
                     {
                         laserHitEnemy(laser, enemy);
                         points = points + 10 - enemy.type;
-                        game.drawBitmap(explotion, (int)enemy.x, (int)enemy.y);                     //måske ikke den bedste sted, men det virker! Collistion får mit spil til at crashe
+                        game.drawBitmap(explotion, (int)enemy.x, (int)enemy.y);                     //måske ikke den bedste sted, men det virker!
                         enemies.remove(i);
                         lasers.remove(y);
                     }
@@ -186,19 +187,21 @@ public class World
     //Ser hvor laser rammer enemy henne!
     private void laserHitEnemy(Laser laser, Enemy enemy)
     {
+        //kontrollere venstre hjørne af enemy
         if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
-                enemy.x, enemy.y + Enemy.HEIGHT, 1, 1))                                             // check the bottom left cornet of the enemy
+                enemy.x, enemy.y + Enemy.HEIGHT, 1, 1))
         {
             return;
         }
+        //kontrollere højre hjørne af enemy
         if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
-                enemy.x + Enemy.WIDTH, enemy.y + Enemy.HEIGHT, 1, 1))                                // check the rigth bottom of the enemy
+                enemy.x + Enemy.WIDTH, enemy.y + Enemy.HEIGHT, 1, 1))
         {
             return;
         }
-
+        //kontrollere bunden af enemy
         if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
-                enemy.x, enemy.y + Enemy.HEIGHT, Enemy.WIDTH, 1))                                   //check the bottom edge of the enemy
+                enemy.x, enemy.y + Enemy.HEIGHT, Enemy.WIDTH, 1))
         {
             return;
         }
@@ -223,36 +226,45 @@ public class World
     //Ser hvor missil rammer player henne!
     private void missilesHits(Missile missile, Player player)
     {
+        //kontrollere top venstre hjørne af player
         if (collideRects(missile.x,missile.y, Missile.WIDTH, Missile.HEIGHT,
-                player.x, player.y, 1,1))                                                             //check the top left corner of the player
+                player.x, player.y, 1,1))
         {
             return;
         }
+        //kontrollere top højre hjørne af player
         if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
-                player.x + Player.WIDTH, player.y, 1,1))                                               // check the top rigth corner of the player
+                player.x + Player.WIDTH, player.y, 1,1))
         {
             return;
         }
+        //kontrollere toppen af player
         if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
-                player.x, player.y + Player.HEIGHT, 1 ,1))                                             // check the bottom left corner of the player
-        {
-
-            return;
-        }
-
-        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
-                player.x, player.y, Player.WIDTH, 1))                                                  //check the top edge of the player
+                player.x, player.y, Player.WIDTH, 1))
         {
             return;
         }
-
+        //kontrollere bund venstre hjørne af player
         if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
-                player.x, player.y, 1, Player.HEIGHT ))                                                 // check the left edge of the player
+                player.x, player.y + Player.HEIGHT, 1 ,1))
         {
             return;
         }
+        //kontrollere bund højre hjørne af player
         if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
-                player.x + Player.WIDTH, player.y, 1, Player.HEIGHT))                                   //check the right edge of the player
+                player.x + Player.WIDTH, player.y + Player.HEIGHT, 1,1))
+        {
+            return;
+        }
+        //kontrollere venstre side af player
+        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+                player.x, player.y, 1, Player.HEIGHT ))
+        {
+            return;
+        }
+        //kontrollere højre side af player
+        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+                player.x + Player.WIDTH, player.y, 1, Player.HEIGHT))
         {
             return;
         }
@@ -295,7 +307,6 @@ public class World
     private void collideMeteorLaser()
     {
         Laser laser;
-
         for (int y = 0; y < lasers.size(); y++)
         {
             laser = lasers.get(y);
@@ -309,14 +320,14 @@ public class World
                         meteorAbsorb(meteor, laser);
                     }
                 }
-
         }
     }
 
     private void meteorAbsorb(Meteor meteor, Laser laser)
     {
+        //kontrollere bunden af meteor
         if (collideRects(meteor.x, meteor.y, Meteor.WIDTH, Meteor.HEIGHT,
-                laser.x, laser.y + Laser.HEIGHT, Laser.WIDTH, 1))                                   //check the bottom edge of the Meteor
+                laser.x, laser.y + Laser.HEIGHT, Laser.WIDTH, 1))
         {
             return;
         }
@@ -347,7 +358,6 @@ public class World
                         laserToMissile(laser,missile);
                     }
                 }
-
         }
     }
 
@@ -355,19 +365,21 @@ public class World
 
     private  void laserToMissile(Laser laser, Missile missile)
     {
+        //kontrollere venstre bund hjørne side af missil
         if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
-                missile.x, missile.y + Missile.HEIGHT, 1 ,1))                                             // check the bottom left cornet of the missile
+                missile.x, missile.y + Missile.HEIGHT, 1 ,1))
         {
             return;
         }
+        //kontrollere højre bund hjørne side af missil
         if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
-                missile.x + Missile.WIDTH, missile.y + Missile.HEIGHT, 1,1))                                // check the rigth bottom of the missile
+                missile.x + Missile.WIDTH, missile.y + Missile.HEIGHT, 1,1))
         {
             return;
         }
-
+        //kontrollere bunden af missil
         if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
-                missile.x, missile.y + Missile.HEIGHT, Missile.WIDTH, 1))                                   //check the bottom edge of the missile
+                missile.x, missile.y + Missile.HEIGHT, Missile.WIDTH, 1))
         {
             return;
         }

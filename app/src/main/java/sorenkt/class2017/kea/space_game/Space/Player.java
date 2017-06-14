@@ -7,7 +7,4 @@ public class Player
     float x = 160 - WIDTH / 2;
     float y = World.MAX_Y - 50;
 
-
-
-
 }

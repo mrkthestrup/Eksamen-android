@@ -12,7 +12,7 @@ public class Laser
     float vy= -100;
 
     //konstruktør
-    public Laser (float x, float y)     //tager x og y oppe fra
+    public Laser (float x, float y)
     {
         this.x = x;
         this.y = y;

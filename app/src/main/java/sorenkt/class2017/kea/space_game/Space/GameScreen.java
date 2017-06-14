@@ -45,14 +45,14 @@ public class GameScreen extends Screen
     @Override
     public void update(float deltaTime)
     {
-        //if the game is paused and has a touch, we change the state to running
+        //hvis spillet er paused og har touch, vi skifter state til running
         if(state ==  State.Paused && game.isTouchDown(0))
         {
             state = State.Running;
             resume();
         }
 
-        //if game over, go back to the mainMenu
+        //Hvis gameover, går tilbage til mainMenu
         if (state ==State.GameOver)
         {
             List<TouchEvent> events = game.getTouchEvents();
@@ -60,20 +60,21 @@ public class GameScreen extends Screen
             {
                 if (events.get(i).type == TouchEvent.TouchEventType.Up)
                 {
-                    game.setScreen(new MainMenuScreen(game));                                       //set the screen to mainMenu
+                    //sætter screem til mainMenu
+                    game.setScreen(new MainMenuScreen(game));
                     return;
                 }
             }
         }
-
-        //if the game is running and has a touch down at the corner
+        //hvis spillet kører og der trykkes på højre hjørne, sættes spillet på pause
         if (state == State.Running && game.isTouchDown(0) && game.getTouchX(0) > (320 -40) && game.getTouchY(0) < 40)
         {
-            //call the pause method
+            //Kalder pause method
             pause();
         }
 
-        game.drawBitmap(background, 0, 0);                                                          //setting the background to the screen
+        //sætter baggrund til skærmen
+        game.drawBitmap(background, 0, 0);
 
 
         if (state == State.Running)
@@ -95,13 +96,13 @@ public class GameScreen extends Screen
 
         if (world.gameOver) state = State.GameOver;
 
-        //if paused, draw the Resume.png in the middel of the screen
+        //hvis pause, så tegner den Resume i midten af skærmen.
         if (state == State.Paused)
         {
             game.drawBitmap(resume, 160 - resume.getWidth()/2, 270 - resume.getHeight()/2);
         }
 
-        //if gameover, draw the gameover.png in the middel of the screen
+        //hvis gameover, så tegner den Gameover i midten af skærmen.
         if(state == State.GameOver)
         {
             game.drawBitmap(gameOver, 160 - gameOver.getWidth()/2, 270 - gameOver.getHeight()/2);

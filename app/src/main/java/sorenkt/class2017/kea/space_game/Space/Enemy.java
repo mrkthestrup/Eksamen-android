@@ -1,6 +1,5 @@
 package sorenkt.class2017.kea.space_game.Space;
 
-import java.util.Random;
 
 public class Enemy
 {
@@ -14,7 +13,7 @@ public class Enemy
     int type;
 
 
-    //konstruktor
+    //konstruktør
     public Enemy(float x, float y, int type)
     {
         this.x = x;
