@@ -51,7 +51,7 @@ public class GameScreen extends Screen
         }
 
         //Hvis gameover, går tilbage til mainMenu
-        if (state ==State.GameOver)
+        if (state == State.GameOver)
         {
             List<TouchEvent> events = game.getTouchEvents();
             for (int i = 0; i < events.size(); i++)
@@ -89,15 +89,17 @@ public class GameScreen extends Screen
         game.drawText(font,"Score: " + Integer.toString(world.points), 27, 11, Color.GREEN,12);
         game.drawText(font,"Liv: " + Integer.toString(world.liv), 140, 11, Color.GREEN,12);
 
+        //tegner alle objekterne i spillet (Enemy, player, laser, missiler, meteor)
         worldrender.render();
-
-        if (world.gameOver) state = State.GameOver;
 
         //hvis pause, så tegner den Resume i midten af skærmen.
         if (state == State.Paused)
         {
             game.drawBitmap(resume, 160 - resume.getWidth()/2, 270 - resume.getHeight()/2);
         }
+
+        //kontrollere om gameOver er sandt, og hvis ja, så stopper spillet
+        if (world.gameOver) state = State.GameOver;
 
         //hvis gameover, så tegner den Gameover i midten af skærmen.
         if(state == State.GameOver)
