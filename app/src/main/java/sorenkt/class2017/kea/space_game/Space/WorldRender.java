@@ -13,9 +13,12 @@ public class WorldRender
     Bitmap spaceShip;
     Bitmap laserGreen;
     Bitmap enemy4;
-    Bitmap meteorBig;
     Bitmap meteorSmall;
     Bitmap missile;
+    Bitmap flame;
+
+
+
 
     public WorldRender(GameEngine game, World world)
     {
@@ -26,6 +29,8 @@ public class WorldRender
         missile = game.loadBitmap("missile.png");
         enemy4 = game.loadBitmap("enemyShip.png");
         meteorSmall = game.loadBitmap("meteorSmall.png");
+        flame = game.loadBitmap("jetFlame2.png");
+
     }
 
     public void render()

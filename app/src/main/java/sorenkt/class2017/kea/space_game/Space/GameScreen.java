@@ -22,7 +22,7 @@ public class GameScreen extends Screen
     }
     State state = State.Running;
     Bitmap background;
-    Bitmap flame;
+   // Bitmap flame;
     Bitmap gameOver;
     Bitmap resume;
     World world;
@@ -37,7 +37,6 @@ public class GameScreen extends Screen
         background = game.loadBitmap("Background-4.png");
         world = new World(game);
         worldrender = new WorldRender(game, world);
-        flame = game.loadBitmap("jetFlame2.png");
         resume = game.loadBitmap("resume.png");
         gameOver = game.loadBitmap("gameover.png");
 
@@ -86,7 +85,7 @@ public class GameScreen extends Screen
             passedTime += deltaTime;
             if((passedTime - (int) passedTime) > 0.5f)
             {
-                game.drawBitmap(flame,(int)world.player.x + Player.HEIGHT/ 2, (int)world.player.y + Player.WIDTH /2);
+                game.drawBitmap(worldrender.flame,(int)world.player.x + Player.HEIGHT/ 2, (int)world.player.y + Player.WIDTH /2);
             }
         }
         game.drawText(font,"Score: " + Integer.toString(world.points), 27, 11, Color.GREEN,12);

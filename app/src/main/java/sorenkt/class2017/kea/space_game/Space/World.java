@@ -1,7 +1,6 @@
 package sorenkt.class2017.kea.space_game.Space;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import sorenkt.class2017.kea.space_game.GameEngine;
-import sorenkt.class2017.kea.space_game.State;
 
 
 public class World
@@ -19,8 +17,6 @@ public class World
     public static final float MIN_Y =40;
     public static final float MAX_Y =479;
 
-
-    Player player = new Player();
     List<Laser> lasers = new ArrayList<>();
     List<Missile> missiles = new ArrayList<>();
     List<Meteor> meteors = new ArrayList<>();
@@ -29,14 +25,18 @@ public class World
     float passedTime = 0;
     float passedTime1 = 0;
     float passedTime2 = 0;
+
     int points = 0;
+    int liv = 100;
+
     Bitmap explotion;
     Bitmap explotion2;
-    int liv = 100;
+
     Missile missile;
     Laser laser;
-    boolean gameOver = false;
+    Player player = new Player();
 
+    boolean gameOver = false;
 
     GameEngine game;
 
@@ -79,7 +79,7 @@ public class World
             passedTime2 = 0;
         }
 
-        //player laser
+        //Players laser
         for(Laser l: lasers)
         {
             l.y = l.y + l.vy * deltaTime;
@@ -113,14 +113,13 @@ public class World
         for (int i = 0; i < lasers.size(); i++)
         {
             laser = lasers.get(i);
-
             if (laser.y < (int) World.MIN_Y)
             {
                 lasers.remove(i);
             }
         }
 
-        //Misilier slettes når den kommer udenfor skærme
+        //Misilier slettes når den kommer udenfor skærmen
         for (int i = 0; i < missiles.size(); i++)
         {
             missile = missiles.get(i);
@@ -148,9 +147,9 @@ public class World
         collideMissileLaser();
     }
 
-    //kontrollere hvordan laser rammer en enemy
-    private boolean collideRects(float x, float y, float width, float height,
-                                 float x2, float y2, float width2, float height2)
+    //kontrollere om der er kollision mellem 2 objekter
+    private boolean collide(float x, float y, float width, float height,
+                            float x2, float y2, float width2, float height2)
     {
         if ((x < x2 + width2) && (x + width > x2) && (y < y2 + height2) && (y+height > y2))
         {
@@ -159,10 +158,10 @@ public class World
         return false;
     }
 
-    //Laser collisition med enemy
+    //Laser kolloider med enemy
     private void collideLaserEnemy()
     {
-        explotion = game.loadBitmap("laserGreenShot.png");
+        explotion = game.loadBitmap("laserGreenShot.png");                                          //måske ikke den bedste sted, men det virker!
         Laser laser;
         for (int y = 0; y < lasers.size(); y++)
         {
@@ -170,7 +169,7 @@ public class World
                 for (int i = 0; i < enemies.size(); i++)
                 {
                     Enemy enemy = enemies.get(i);
-                    if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+                    if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                             enemy.x, enemy.y, Enemy.WIDTH, Enemy.HEIGHT))
                     {
                         laserHitEnemy(laser, enemy);
@@ -184,36 +183,36 @@ public class World
         }
     }
 
-    //Ser hvor laser rammer enemy henne!
+    //kontrollere hvor laser kolloider med enemy henne!
     private void laserHitEnemy(Laser laser, Enemy enemy)
     {
         //kontrollere venstre hjørne af enemy
-        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+        if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                 enemy.x, enemy.y + Enemy.HEIGHT, 1, 1))
         {
             return;
         }
         //kontrollere højre hjørne af enemy
-        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+        if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                 enemy.x + Enemy.WIDTH, enemy.y + Enemy.HEIGHT, 1, 1))
         {
             return;
         }
         //kontrollere bunden af enemy
-        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+        if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                 enemy.x, enemy.y + Enemy.HEIGHT, Enemy.WIDTH, 1))
         {
             return;
         }
     }
 
-    //Missil rammer player
+    //Missil kolloider med player
     private void collideMissilePlayer()
     {
         for (int i = 0; i < missiles.size(); i++)
         {
             Missile missile = missiles.get(i);
-            if (collideRects(player.x, player.y, Player.WIDTH, Player.HEIGHT,
+            if (collide(player.x, player.y, Player.WIDTH, Player.HEIGHT,
                     missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT))
             {
                 liv = liv - 20;
@@ -223,60 +222,60 @@ public class World
         }
     }
 
-    //Ser hvor missil rammer player henne!
+    //kontrollere hvor missil kolloider med player henne!
     private void missilesHits(Missile missile, Player player)
     {
         //kontrollere top venstre hjørne af player
-        if (collideRects(missile.x,missile.y, Missile.WIDTH, Missile.HEIGHT,
+        if (collide(missile.x,missile.y, Missile.WIDTH, Missile.HEIGHT,
                 player.x, player.y, 1,1))
         {
             return;
         }
         //kontrollere top højre hjørne af player
-        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+        if (collide(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
                 player.x + Player.WIDTH, player.y, 1,1))
         {
             return;
         }
         //kontrollere toppen af player
-        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+        if (collide(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
                 player.x, player.y, Player.WIDTH, 1))
         {
             return;
         }
         //kontrollere bund venstre hjørne af player
-        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+        if (collide(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
                 player.x, player.y + Player.HEIGHT, 1 ,1))
         {
             return;
         }
         //kontrollere bund højre hjørne af player
-        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+        if (collide(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
                 player.x + Player.WIDTH, player.y + Player.HEIGHT, 1,1))
         {
             return;
         }
         //kontrollere venstre side af player
-        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+        if (collide(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
                 player.x, player.y, 1, Player.HEIGHT ))
         {
             return;
         }
         //kontrollere højre side af player
-        if (collideRects(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
+        if (collide(missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT,
                 player.x + Player.WIDTH, player.y, 1, Player.HEIGHT))
         {
             return;
         }
     }
 
-    //Enemy rammer player eller player rammer enemy
+    //Enemy kolloider med player || player kolloider med enemy
     private void collideEnemyPlayer()
     {
         for (int i = 0; i < enemies.size(); i++)
         {
             Enemy enemy = enemies.get(i);
-            if (collideRects(player.x, player.y, Player.WIDTH, Player.HEIGHT,
+            if (collide(player.x, player.y, Player.WIDTH, Player.HEIGHT,
                     enemy.x, enemy.y, Enemy.WIDTH, Enemy.HEIGHT))
             {
                 gameOver = true;
@@ -284,7 +283,7 @@ public class World
         }
     }
 
-    //meteor rammer player
+    //kontollere om meteor kolloider med player
     private void collideMeteorPlayer()
     {
         Random random = new Random();
@@ -294,7 +293,7 @@ public class World
         for (int i = 0; i < meteors.size(); i++)
         {
             Meteor meteor = meteors.get(i);
-            if (collideRects(player.x, player.y, Player.WIDTH, Player.HEIGHT,
+            if (collide(player.x, player.y, Player.WIDTH, Player.HEIGHT,
                     meteor.x, meteor.y, Meteor.WIDTH, Meteor.HEIGHT))
             {
                 liv = liv - randomnumber;
@@ -303,7 +302,7 @@ public class World
         }
     }
 
-    // meteoer rammer laser
+    //meteoer kolloider med laser
     private void collideMeteorLaser()
     {
         Laser laser;
@@ -313,7 +312,7 @@ public class World
                 for (int i = 0; i < meteors.size(); i++)
                 {
                     Meteor meteor = meteors.get(i);
-                    if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+                    if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                             meteor.x, meteor.y, Meteor.WIDTH, Meteor.HEIGHT))
                     {
                         lasers.remove(y);
@@ -322,20 +321,20 @@ public class World
                 }
         }
     }
-
+    //kontrollere om meteor kolloider med laser
     private void meteorAbsorb(Meteor meteor, Laser laser)
     {
         //kontrollere bunden af meteor
-        if (collideRects(meteor.x, meteor.y, Meteor.WIDTH, Meteor.HEIGHT,
+        if (collide(meteor.x, meteor.y, Meteor.WIDTH, Meteor.HEIGHT,
                 laser.x, laser.y + Laser.HEIGHT, Laser.WIDTH, 1))
         {
             return;
         }
     }
-
+    //Laser kolloider med Missil
     private void collideMissileLaser()
     {
-        explotion2 = game.loadBitmap("Explosion.png");
+       explotion2 = game.loadBitmap("Explosion.png");
         Random random = new Random();
         int max = 5;
         int min = 0;
@@ -348,7 +347,7 @@ public class World
                 for (int i = 0; i < missiles.size(); i++)
                 {
                     Missile missile = missiles.get(i);
-                    if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+                    if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                             missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT))
                     {
                         game.drawBitmap(explotion2, (int)missile.x, (int)missile.y);
@@ -360,25 +359,23 @@ public class World
                 }
         }
     }
-
-
-
+    //kontrollere hvor laser kolloider med missil henne!
     private  void laserToMissile(Laser laser, Missile missile)
     {
         //kontrollere venstre bund hjørne side af missil
-        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+        if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                 missile.x, missile.y + Missile.HEIGHT, 1 ,1))
         {
             return;
         }
         //kontrollere højre bund hjørne side af missil
-        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+        if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                 missile.x + Missile.WIDTH, missile.y + Missile.HEIGHT, 1,1))
         {
             return;
         }
         //kontrollere bunden af missil
-        if (collideRects(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
+        if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                 missile.x, missile.y + Missile.HEIGHT, Missile.WIDTH, 1))
         {
             return;
