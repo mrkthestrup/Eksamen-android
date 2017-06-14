@@ -22,7 +22,6 @@ public class GameScreen extends Screen
     }
     State state = State.Running;
     Bitmap background;
-   // Bitmap flame;
     Bitmap gameOver;
     Bitmap resume;
     World world;
