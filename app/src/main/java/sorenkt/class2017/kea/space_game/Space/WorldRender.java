@@ -30,39 +30,38 @@ public class WorldRender
         enemy4 = game.loadBitmap("enemyShip.png");
         meteorSmall = game.loadBitmap("meteorSmall.png");
         flame = game.loadBitmap("jetFlame2.png");
-
     }
 
     public void render()
     {
+        //tegner player på skærmen
+        game.drawBitmap(spaceShip, (int)world.player.x, (int)world.player.y);
 
+        //tegner enemy på skærmen
         for (Enemy e: world.enemies)
         {
+            //enemy
             game.drawBitmap(enemy4, (int)e.x, (int)e.y);
         }
 
-        game.drawBitmap(spaceShip, (int)world.player.x, (int)world.player.y);
-
-
+        //tegner laser på skærmen
         for(Laser l: world.lasers)
         {
-            //laser vises ud fra guns
+            //laser vises ud fra guns position
             game.drawBitmap(laserGreen, (int)l.x, (int)l.y);
         }
-
+        //tegner Missiler på skærmen
         for(Missile m: world.missiles)
         {
             //Missiller
             game.drawBitmap(missile, (int)m.x, (int)m.y);
         }
-
-
+        //tegner Meteor på skærmen
         for(Meteor meteor: world.meteors)
         {
             //Meteor
             game.drawBitmap(meteorSmall, (int)meteor.x, (int)meteor.y);
         }
-
     }
 
 

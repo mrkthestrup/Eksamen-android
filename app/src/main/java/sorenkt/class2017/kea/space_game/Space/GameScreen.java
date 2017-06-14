@@ -75,7 +75,6 @@ public class GameScreen extends Screen
         //sætter baggrund til skærmen
         game.drawBitmap(background, 0, 0);
 
-
         if (state == State.Running)
         {
             world.update(deltaTime,game.getAccelerometer()[0]);

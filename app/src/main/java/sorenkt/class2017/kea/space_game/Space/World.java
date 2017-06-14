@@ -161,7 +161,7 @@ public class World
     //Laser kolloider med enemy
     private void collideLaserEnemy()
     {
-        explotion = game.loadBitmap("laserGreenShot.png");                                          //måske ikke den bedste sted, men det virker!
+        explotion = game.loadBitmap("laserGreenShot.png");                                          //måske ikke det bedste sted, men det virker!
         Laser laser;
         for (int y = 0; y < lasers.size(); y++)
         {
@@ -174,7 +174,7 @@ public class World
                     {
                         laserHitEnemy(laser, enemy);
                         points = points + 10 - enemy.type;
-                        game.drawBitmap(explotion, (int)enemy.x, (int)enemy.y);                     //måske ikke den bedste sted, men det virker!
+                        game.drawBitmap(explotion, (int)enemy.x, (int)enemy.y);                     //måske ikke det bedste sted, men det virker!
                         enemies.remove(i);
                         lasers.remove(y);
                     }
@@ -334,7 +334,7 @@ public class World
     //Laser kolloider med Missil
     private void collideMissileLaser()
     {
-       explotion2 = game.loadBitmap("Explosion.png");
+       explotion2 = game.loadBitmap("Explosion.png");                                               //måske ikke det bedste sted, men det virker!
         Random random = new Random();
         int max = 5;
         int min = 0;
@@ -350,7 +350,7 @@ public class World
                     if (collide(laser.x, laser.y, Laser.WIDTH, Laser.HEIGHT,
                             missile.x, missile.y, Missile.WIDTH, Missile.HEIGHT))
                     {
-                        game.drawBitmap(explotion2, (int)missile.x, (int)missile.y);
+                        game.drawBitmap(explotion2, (int)missile.x, (int)missile.y);                //måske ikke det bedste sted, men det virker!
                         lasers.remove(y);
                         missiles.remove(i);
                         points = points + randomnumber2;
